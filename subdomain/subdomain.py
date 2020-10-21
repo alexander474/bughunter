@@ -3,6 +3,7 @@ from threading import Thread
 from queue import Queue
 
 q = Queue()
+l = []
 
 
 def scan_subdomains(domain):
@@ -16,6 +17,7 @@ def scan_subdomains(domain):
             pass
         else:
             print("[+] Discovered subdomain: ", url)
+            l.append(url)
 
         q.task_done()
 
@@ -34,6 +36,7 @@ def main(domain, n_threads=10, subdomains=None):
         worker.daemon = True
         worker.start()
     q.join()
+    return l
 
 
 if __name__ == "__main__":

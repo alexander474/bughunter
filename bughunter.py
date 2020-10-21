@@ -1,12 +1,15 @@
 __author__ = 'Alexander Bredesen'
 __version__ = '1.0'
 
-from subdomain import subdomain as subfinder
 import sys
 
+from subdomain import subdomain as subfinder
+from utils import create_project_dir, write_list_to_file
 
-def main(root_domain, number_of_threads):
-    subfinder.main(domain=domain, n_threads=n_threads)
+
+def main(root_domain, root_domain_prefix, number_of_threads):
+    create_project_dir(root_domain)
+    write_list_to_file(root_domain + "/" + root_domain + "_subdomains", subfinder.main(domain=domain, n_threads=n_threads))
 
 
 def banner():
@@ -42,4 +45,4 @@ if __name__ == "__main__":
     n_threads = args.threads
     banner()
 
-    main(root_domain=domain, number_of_threads=n_threads)
+    main(root_domain=domain.split('.')[0], root_domain_prefix=domain.split('.')[1], number_of_threads=n_threads)
